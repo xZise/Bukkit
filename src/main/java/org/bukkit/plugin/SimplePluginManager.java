@@ -28,6 +28,7 @@ import org.bukkit.command.SimpleCommandMap;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.event.server.PluginEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
@@ -281,6 +282,17 @@ public final class SimplePluginManager implements PluginManager {
             } catch (Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred (in the plugin loader) while enabling " + plugin.getDescription().getFullName() + " (Is it up to date?): " + ex.getMessage(), ex);
             }
+            
+            if (plugin.isEnabled()) {
+                this.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
+                // Calls the new enabled plugin the enable listener for each plugin
+                // previously enabled
+                for (Plugin otherPlugin : this.plugins) {
+                    if (otherPlugin != plugin) {
+                        this.callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, otherPlugin), plugin);
+                    }
+                }
+            }
         }
     }
 
@@ -331,32 +343,38 @@ public final class SimplePluginManager implements PluginManager {
      * @param event Event details
      */
     public synchronized void callEvent(Event event) {
+        this.callEvent(event, null);
+    }
+
+    private synchronized void callEvent(Event event, Plugin receiverPlugin) {
         SortedSet<RegisteredListener> eventListeners = listeners.get(event.getType());
 
         if (eventListeners != null) {
             for (RegisteredListener registration : eventListeners) {
-                try {
-                    registration.callEvent(event);
-                } catch (AuthorNagException ex) {
-                    Plugin plugin = registration.getPlugin();
+                Plugin plugin = registration.getPlugin();
+                if (receiverPlugin == null || plugin == receiverPlugin) {
+                    try {
+                        registration.callEvent(event);
+                    } catch (AuthorNagException ex) {
 
-                    if (plugin.isNaggable()) {
-                        plugin.setNaggable(false);
+                        if (plugin.isNaggable()) {
+                            plugin.setNaggable(false);
 
-                        String author = "<NoAuthorGiven>";
+                            String author = "<NoAuthorGiven>";
 
-                        if (plugin.getDescription().getAuthors().size() > 0) {
-                            author = plugin.getDescription().getAuthors().get(0);
+                            if (plugin.getDescription().getAuthors().size() > 0) {
+                                author = plugin.getDescription().getAuthors().get(0);
+                            }
+                            server.getLogger().log(Level.SEVERE, String.format(
+                                "Nag author: '%s' of '%s' about the following: %s",
+                                author,
+                                plugin.getDescription().getName(),
+                                ex.getMessage()
+                            ));
                         }
-                        server.getLogger().log(Level.SEVERE, String.format(
-                            "Nag author: '%s' of '%s' about the following: %s",
-                            author,
-                            plugin.getDescription().getName(),
-                            ex.getMessage()
-                        ));
+                    } catch (Throwable ex) {
+                        server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
                     }
-                } catch (Throwable ex) {
-                    server.getLogger().log(Level.SEVERE, "Could not pass event " + event.getType() + " to " + registration.getPlugin().getDescription().getName(), ex);
                 }
             }
         }

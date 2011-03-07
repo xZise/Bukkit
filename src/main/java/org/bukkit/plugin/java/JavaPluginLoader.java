@@ -959,9 +959,7 @@ public class JavaPluginLoader implements PluginLoader {
                 server.getLogger().log(Level.SEVERE, "Error occurred while enabling " + plugin.getDescription().getFullName() + " (Is it up to date?): " + ex.getMessage(), ex);
             }
 
-            // Perhaps abort here, rather than continue going, but as it stands,
-            // an abort is not possible the way it's currently written
-            server.getPluginManager().callEvent(new PluginEnableEvent(plugin));
+            jPlugin.setEnabled(true);
         }
     }
 
