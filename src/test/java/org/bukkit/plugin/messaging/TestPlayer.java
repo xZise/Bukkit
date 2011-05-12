@@ -28,6 +28,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Callback;
 import org.bukkit.util.Vector;
 
 public class TestPlayer implements Player {
@@ -296,6 +297,18 @@ public class TestPlayer implements Player {
     }
 
     public Location getEyeLocation() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<Block> getLineOfSightCallbacked(Callback<Boolean, Block> callback, int maxDistance) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Block getTargetBlockCallbacked(Callback<Boolean, Block> callback, int maxDistance) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<Block> getLastTwoTargetBlocksCallbacked(Callback<Boolean, Block> callback, int maxDistance) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
