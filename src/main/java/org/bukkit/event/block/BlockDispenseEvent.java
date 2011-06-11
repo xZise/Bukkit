@@ -4,6 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.location.EntityLocation;
+import org.bukkit.location.LocationGetter;
 import org.bukkit.util.Vector;
 
 /**
@@ -15,9 +16,9 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
 
     private boolean cancelled = false;
     private ItemStack item;
-    private EntityLocation velocity;
+    private LocationGetter velocity;
 
-    public BlockDispenseEvent(Block block, ItemStack dispensed, EntityLocation velocity) {
+    public BlockDispenseEvent(Block block, ItemStack dispensed, LocationGetter velocity) {
         super(Type.BLOCK_DISPENSE, block);
         this.item = dispensed;
         this.velocity = velocity;
@@ -48,8 +49,8 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      *
      * @return
      */
-    //TODO: Change from Vector to EntityLocation
-//    public EntityLocation getVelocity() {
+    //TODO: Change from Vector to LocationGetter
+//    public LocationGetter getVelocity() {
 //        return velocity.clone();
 //    }
     public Vector getVelocity() {
@@ -61,7 +62,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
      *
      * @param vel
      */
-    public void setVelocity(EntityLocation vel) {
+    public void setVelocity(LocationGetter vel) {
         velocity = vel;
     }
 

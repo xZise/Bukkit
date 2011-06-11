@@ -3,6 +3,7 @@ package org.bukkit.event.world;
 import org.bukkit.World;
 import org.bukkit.Location;
 import org.bukkit.location.DirectionalEntityLocation;
+import org.bukkit.location.WorldSpecificGetter;
 
 /**
  * An event that is called when a world's spawn changes. The
@@ -11,9 +12,9 @@ import org.bukkit.location.DirectionalEntityLocation;
  * @author willurd
  */
 public class SpawnChangeEvent extends WorldEvent {
-    private DirectionalEntityLocation previousLocation;
+    private WorldSpecificGetter previousLocation;
 
-    public SpawnChangeEvent(World world, DirectionalEntityLocation previousLocation) {
+    public SpawnChangeEvent(World world, WorldSpecificGetter previousLocation) {
         super(Type.SPAWN_CHANGE, world);
         this.previousLocation = previousLocation;
     }
@@ -23,8 +24,8 @@ public class SpawnChangeEvent extends WorldEvent {
      *
      * @return Location that used to be spawn
      */
-    // TODO: Change from Location to DirectionalEntityLocation
-//  public DirectionalEntityLocation getLocation() {
+    // TODO: Change from Location to WorldSpecificGetter
+//  public WorldSpecificGetter getLocation() {
 //      return location;
 //  }
     public Location getPreviousLocation() {

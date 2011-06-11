@@ -7,6 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.location.FixedDoubleLocation;
+import org.bukkit.location.LocationGetter;
 
 /**
  * A chunk generator is responsible for the initial shaping of an entire chunk.
@@ -73,6 +75,7 @@ public abstract class ChunkGenerator {
         return new ArrayList<BlockPopulator>();
     }
 
+    //TODO: Rename to getFixedSpawnLocation()!
     /**
      * Gets a fixed spawn location to use for a given world.
      *
@@ -83,7 +86,28 @@ public abstract class ChunkGenerator {
      * @param random Random generator to use in the calculation
      * @return Location containing a new spawn point, otherwise null
      */
-    public Location getFixedSpawnLocation(World world, Random random) {
+    protected LocationGetter getFixedSpawnLocation2(World world, Random random) {
         return null;
+    }
+
+    /**
+     * Gets a fixed spawn location to use for a given world.
+     *
+     * A null value is returned if a world should not use a fixed spawn point,
+     * and will instead attempt to find one randomly.
+     * 
+     * <p><b>Assume that the location is of type <code>LocationGetter</code>.</br>
+     * For example:</b>
+     * <blockquote>
+     * <code>ChunkGenerator x = …;<br>
+     * LocationGetter loc = x.getFixedSpawnLocation(…)</code>
+     * </blockquote></p>
+     *
+     * @param world The world to locate a spawn point for
+     * @param random Random generator to use in the calculation
+     * @return Location containing a new spawn point, otherwise null
+     */
+    public final Location getFixedSpawnLocation(World world, Random random) {
+        return new Location(world, this.getFixedSpawnLocation2(world, random));
     }
 }

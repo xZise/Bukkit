@@ -5,6 +5,7 @@ import org.bukkit.location.EntityLocation;
 import org.bukkit.location.LocationGetter;
 import org.bukkit.location.LocationUtil;
 import org.bukkit.location.WorldEntityLocation;
+import org.bukkit.location.WorldSpecificGetter;
 import org.bukkit.util.Vector;
 
 /**
@@ -43,6 +44,16 @@ public class Location extends DirectionalEntityLocation {
         this.ref = null;
     }
 
+    public Location(WorldSpecificGetter from) {
+        super(from.getWorld(), from.getX(), from.getY(), from.getZ());
+        this.ref = null;
+    }
+    
+    public Location(final World world, LocationGetter from) {
+        super(world, from.getX(), from.getY(), from.getZ());
+        this.ref = null;
+    }
+    
     public Location(DirectionalEntityLocation from) {
         super(from.getWorld(), from.getX(), from.getY(), from.getZ(), from.getYaw(), from.getPitch());
         this.ref = from;
