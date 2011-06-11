@@ -1,5 +1,8 @@
 package org.bukkit.util;
 
+import org.bukkit.location.BlockLocation;
+import org.bukkit.location.LocationUtil;
+
 /**
  * A vector with a hash function that floors the X, Y, Z components, a la
  * BlockVector in WorldEdit. BlockVectors can be used in hash sets and
@@ -7,25 +10,23 @@ package org.bukkit.util;
  * that BlockVectors are never changed once put into a hash set or hash map.
  *
  * @author sk89q
+ * @deprecated Use {@link BlockLocation} instead
  */
-public class BlockVector extends Vector {
+@Deprecated
+public class BlockVector extends BlockLocation {
 
     /**
      * Construct the vector with all components as 0.
      */
     public BlockVector() {
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
+        super(0, 0, 0);
     }
 
     /**
      * Construct the vector with another vector.
      */
     public BlockVector(Vector vec) {
-        this.x = vec.getX();
-        this.y = vec.getY();
-        this.z = vec.getZ();
+        super(vec);
     }
 
     /**
@@ -36,9 +37,7 @@ public class BlockVector extends Vector {
      * @param z
      */
     public BlockVector(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
     }
 
     /**
@@ -49,22 +48,7 @@ public class BlockVector extends Vector {
      * @param z
      */
     public BlockVector(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    /**
-     * Construct the vector with provided float components.
-     *
-     * @param x
-     * @param y
-     * @param z
-     */
-    public BlockVector(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(LocationUtil.locToBlock(x), LocationUtil.locToBlock(y), LocationUtil.locToBlock(z));
     }
 
     /**
@@ -80,7 +64,7 @@ public class BlockVector extends Vector {
         }
         BlockVector other = (BlockVector) obj;
 
-        return (int) other.getX() == (int) this.x && (int) other.getY() == (int) this.y && (int) other.getZ() == (int) this.z;
+        return other.getBlockX() == this.getBlockX() && other.getBlockY() == this.getBlockY() && other.getBlockZ() == this.getBlockZ();
 
     }
 
@@ -91,7 +75,7 @@ public class BlockVector extends Vector {
      */
     @Override
     public int hashCode() {
-        return (Integer.valueOf((int) x).hashCode() >> 13) ^ (Integer.valueOf((int) y).hashCode() >> 7) ^ Integer.valueOf((int) z).hashCode();
+        return (Integer.valueOf(this.getBlockX()).hashCode() >> 13) ^ (Integer.valueOf(this.getBlockY()).hashCode() >> 7) ^ Integer.valueOf(this.getBlockZ()).hashCode();
     }
 
     /**
@@ -101,11 +85,6 @@ public class BlockVector extends Vector {
      */
     @Override
     public BlockVector clone() {
-        BlockVector v = (BlockVector) super.clone();
-
-        v.x = x;
-        v.y = y;
-        v.z = z;
-        return v;
+        return (BlockVector) super.clone();
     }
 }
