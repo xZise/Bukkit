@@ -53,7 +53,7 @@ public class BlockDispenseEvent extends BlockEvent implements Cancellable {
 //        return velocity.clone();
 //    }
     public Vector getVelocity() {
-        return (Vector) velocity.clone();
+        return new Vector(velocity);
     }
 
     /**

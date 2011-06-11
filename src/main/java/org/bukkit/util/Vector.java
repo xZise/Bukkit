@@ -3,8 +3,8 @@ package org.bukkit.util;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.location.DirectionalEntityLocation;
 import org.bukkit.location.EntityLocation;
+import org.bukkit.location.LocationGetter;
 import org.bukkit.location.LocationUtil;
 
 /**
@@ -67,6 +67,10 @@ public class Vector extends EntityLocation {
     // obsolete! Already covered by Vector(double, double, double);
     public Vector(float x, float y, float z) {
         super(x, y, z);
+    }
+    
+    public Vector(LocationGetter location) {
+        super(location.getX(), location.getY(), location.getZ());
     }
 
     /**

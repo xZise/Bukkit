@@ -4,22 +4,23 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
+import org.bukkit.location.DirectionalEntityLocation;
 
 /**
  * Holds information for player movement events
  */
 public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
     private boolean cancel = false;
-    private Location from;
-    private Location to;
+    private DirectionalEntityLocation from;
+    private DirectionalEntityLocation to;
 
-    public PlayerMoveEvent(final Player player, final Location from, final Location to) {
+    public PlayerMoveEvent(final Player player, final DirectionalEntityLocation from, final DirectionalEntityLocation to) {
         super(Type.PLAYER_MOVE, player);
         this.from = from;
         this.to = to;
     }
 
-    PlayerMoveEvent(final Event.Type type, final Player player, final Location from, final Location to) {
+    PlayerMoveEvent(final Event.Type type, final Player player, final DirectionalEntityLocation from, final DirectionalEntityLocation to) {
         super(type, player);
         this.from = from;
         this.to = to;
@@ -58,8 +59,12 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @return Location the player moved from
      */
+    // TODO: Change from Location to DirectionalEntityLocation
+//  public DirectionalEntityLocation getLocation() {
+//      return location;
+//  }
     public Location getFrom() {
-        return from;
+        return new Location(from);
     }
 
     /**
@@ -67,7 +72,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param from New location to mark as the players previous location
      */
-    public void setFrom(Location from) {
+    public void setFrom(DirectionalEntityLocation from) {
         this.from = from;
     }
 
@@ -76,8 +81,12 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @return Location the player moved to
      */
+    // TODO: Change from Location to DirectionalEntityLocation
+//  public DirectionalEntityLocation getLocation() {
+//      return location;
+//  }
     public Location getTo() {
-        return to;
+        return new Location(to);
     }
 
     /**
@@ -85,7 +94,7 @@ public class PlayerMoveEvent extends PlayerEvent implements Cancellable {
      *
      * @param to New Location this player will move to
      */
-    public void setTo(Location to) {
+    public void setTo(DirectionalEntityLocation to) {
         this.to = to;
     }
 }

@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
+import org.bukkit.location.DirectionalEntityLocation;
 
 /**
  *
@@ -12,11 +13,11 @@ import org.bukkit.event.Cancellable;
  */
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
     private boolean cancel;
-    private Location location;
+    private DirectionalEntityLocation location;
     private List<Block> blocks;
     private float yield = 0.3F;
 
-    public EntityExplodeEvent(Entity what, Location location, List<Block> blocks) {
+    public EntityExplodeEvent(Entity what, DirectionalEntityLocation location, List<Block> blocks) {
         super(Type.ENTITY_EXPLODE, what);
         this.location = location;
         this.cancel = false;
@@ -44,8 +45,12 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
      * It is not possible to get this value from the Entity as
      * the Entity no longer exists in the world.
      */
+  //TODO: Change from Location to DirectionalEntityLocation
+//    public DirectionalEntityLocation getLocation() {
+//        return location;
+//    }
     public Location getLocation() {
-        return location;
+        return new Location(location);
     }
 
     /**

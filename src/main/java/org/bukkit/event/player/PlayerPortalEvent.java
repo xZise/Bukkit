@@ -1,7 +1,7 @@
 package org.bukkit.event.player;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.location.DirectionalEntityLocation;
 import org.bukkit.block.Block;
 
 /**
@@ -9,7 +9,7 @@ import org.bukkit.block.Block;
  */
 public class PlayerPortalEvent extends PlayerTeleportEvent {
     private boolean useTravelAgent = true;
-    public PlayerPortalEvent(Player player, Location from, Location to) {
+    public PlayerPortalEvent(Player player, DirectionalEntityLocation from, DirectionalEntityLocation to) {
         super(Type.PLAYER_PORTAL, player, from, to);
     }
 

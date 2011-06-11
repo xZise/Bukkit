@@ -50,7 +50,7 @@ public class WorldEntityLocation extends EntityLocation implements WorldSpecific
             throw new IllegalArgumentException("Cannot add Locations of differing worlds");
         }
 
-        return (WorldEntityLocation) super.subtract(location);
+        return (WorldEntityLocation) super.add(location);
     }
 
     public WorldEntityLocation subtract(WorldSpecificGetter location) {

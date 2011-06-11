@@ -4,17 +4,18 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
+import org.bukkit.location.DirectionalEntityLocation;
 
 /**
  * Stores data for damage events
  */
 public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
 
-    private Location location;
+    private DirectionalEntityLocation location;
     private boolean canceled;
     private CreatureType creatureType;
 
-    public CreatureSpawnEvent(Entity spawnee, CreatureType mobtype, Location loc) {
+    public CreatureSpawnEvent(Entity spawnee, CreatureType mobtype, DirectionalEntityLocation loc) {
         super(Type.CREATURE_SPAWN, spawnee);
         this.creatureType = mobtype;
         this.location = loc;
@@ -44,8 +45,12 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
      * Gets the location at which the creature is spawning.
      * @return The location at which the creature is spawning
      */
+    //TODO: Change from Location to DirectionalEntityLocation
+//    public DirectionalEntityLocation getLocation() {
+//        return location;
+//    }
     public Location getLocation() {
-        return location;
+        return new Location(location);
     }
 
     /**
