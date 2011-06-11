@@ -1,5 +1,6 @@
 package org.bukkit.entity;
 
+import org.bukkit.location.LocationGetter;
 import org.bukkit.util.Vector;
 
 /**
@@ -14,6 +15,8 @@ public interface Vehicle extends Entity {
      *
      * @return velocity vector
      */
+    //TODO: De-deprecate
+//    public LocationGetter getVelocity();
     public Vector getVelocity();
 
     /**
@@ -21,5 +24,5 @@ public interface Vehicle extends Entity {
      *
      * @param vel velocity vector
      */
-    public void setVelocity(Vector vel);
+    public void setVelocity(LocationGetter vel);
 }

@@ -120,7 +120,8 @@ public interface Block {
      *
      * @return Location of block
      */
-
+    //TODO: De-deprecate
+//    WorldSpecificGetter getLocation();
     Location getLocation();
 
     /**

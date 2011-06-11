@@ -4,6 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.location.DirectionalEntityLocation;
+import org.bukkit.location.LocationGetter;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -19,6 +21,8 @@ public interface Entity {
      *
      * @return Location containing the position of this entity
      */
+    //TODO: De-deprecate
+//    public DirectionalEntityLocation getLocation();
     public Location getLocation();
 
     /**
@@ -26,13 +30,15 @@ public interface Entity {
      *
      * @param velocity New velocity to travel with
      */
-    public void setVelocity(Vector velocity);
+    public void setVelocity(LocationGetter velocity);
 
     /**
      * Gets this entity's current velocity
      *
      * @return Current travelling velocity of this entity
      */
+    //TODO: De-deprecate
+//    public LocationGetter getVelocity();
     public Vector getVelocity();
 
     /**
@@ -48,7 +54,7 @@ public interface Entity {
      * @param location New location to teleport this entity to
      * @return <code>true</code> if the teleport was successful
      */
-    public boolean teleport(Location location);
+    public boolean teleport(DirectionalEntityLocation location);
 
     /**
      * Teleports this entity to the target Entity
@@ -64,7 +70,7 @@ public interface Entity {
      * @param location New location to teleport this entity to
      * @deprecated use {@link #teleport(Location)}
      */
-    public void teleportTo(Location location);
+    public void teleportTo(DirectionalEntityLocation location);
 
     /**
      * Teleports this entity to the target Entity

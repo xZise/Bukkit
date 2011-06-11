@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
+import org.bukkit.location.LocationGetter;
 
 /**
  * Represents a world, which may contain entities, chunks and blocks
@@ -33,7 +33,7 @@ public interface World {
      * @return Block at the given location
      * @see #getBlockTypeIdAt(org.bukkit.Location) Returns the current type ID of the block
      */
-    public Block getBlockAt(Location location);
+    public Block getBlockAt(LocationGetter location);
 
     /**
      * Gets the block type ID at the given coordinates
@@ -53,7 +53,7 @@ public interface World {
      * @return Type ID of the block at the given location
      * @see #getBlockAt(org.bukkit.Location) Returns a live Block object at the given location
      */
-    public int getBlockTypeIdAt(Location location);
+    public int getBlockTypeIdAt(LocationGetter location);
 
     /**
      * Gets the highest non-air coordinate at the given coordinates
@@ -70,7 +70,7 @@ public interface World {
      * @param location Location of the blocks
      * @return Y-coordinate of the highest non-air block
      */
-    public int getHighestBlockYAt(Location location);
+    public int getHighestBlockYAt(LocationGetter location);
 
     /**
      * Gets the {@link Chunk} at the given coordinates
@@ -87,7 +87,7 @@ public interface World {
      * @param location Location of the chunk
      * @return Chunk at the given location
      */
-    public Chunk getChunkAt(Location location);
+    public Chunk getChunkAt(LocationGetter location);
 
     /**
      * Gets the {@link Chunk} that contains the given {@link Block}
@@ -229,7 +229,7 @@ public interface World {
      * @param item ItemStack to drop
      * @return ItemDrop entity created as a result of this method
      */
-    public Item dropItem(Location location, ItemStack item);
+    public Item dropItem(LocationGetter location, ItemStack item);
 
     /**
      * Drops an item at the specified {@link Location} with a random offset
@@ -238,7 +238,7 @@ public interface World {
      * @param item ItemStack to drop
      * @return ItemDrop entity created as a result of this method
      */
-    public Item dropItemNaturally(Location location, ItemStack item);
+    public Item dropItemNaturally(LocationGetter location, ItemStack item);
 
     /**
      * Creates an {@link Arrow} entity at the given {@link Location}
@@ -249,7 +249,7 @@ public interface World {
      * @param spread Spread of the arrow. A recommend spread is 12
      * @return Arrow entity spawned as a result of this method
      */
-    public Arrow spawnArrow(Location location, Vector velocity, float speed, float spread);
+    public Arrow spawnArrow(LocationGetter location, LocationGetter velocity, float speed, float spread);
 
     /**
      * Creates a tree at the given {@link Location}
@@ -258,7 +258,7 @@ public interface World {
      * @param type Type of the tree to create
      * @return true if the tree was created successfully, otherwise false
      */
-    public boolean generateTree(Location location, TreeType type);
+    public boolean generateTree(LocationGetter location, TreeType type);
 
     /**
      * Creates a tree at the given {@link Location}
@@ -268,7 +268,7 @@ public interface World {
      * @param delegate A class to call for each block changed as a result of this method
      * @return true if the tree was created successfully, otherwise false
      */
-    public boolean generateTree(Location loc, TreeType type, BlockChangeDelegate delegate);
+    public boolean generateTree(LocationGetter loc, TreeType type, BlockChangeDelegate delegate);
 
     /**
      * Creates a regular passenger minecart at the given {@link Location}
@@ -276,7 +276,7 @@ public interface World {
      * @param location Location to spawn the minecart
      * @return Minecart created as a result of this method
      */
-    public Minecart spawnMinecart(Location location);
+    public Minecart spawnMinecart(LocationGetter location);
 
     /**
      * Creates a storage minecart at the given {@link Location}
@@ -284,7 +284,7 @@ public interface World {
      * @param loc Location to spawn the minecart
      * @return StorageMinecart created as a result of this method
      */
-    public StorageMinecart spawnStorageMinecart(Location loc);
+    public StorageMinecart spawnStorageMinecart(LocationGetter loc);
 
     /**
      * Creates a powered minecart at the given {@link Location}
@@ -292,7 +292,7 @@ public interface World {
      * @param loc Location to spawn the minecart
      * @return PoweredMinecart created as a result of this method
      */
-    public PoweredMinecart spawnPoweredMinecart(Location loc);
+    public PoweredMinecart spawnPoweredMinecart(LocationGetter loc);
 
     /**
      * Creates a boat at the given {@link Location}
@@ -300,7 +300,7 @@ public interface World {
      * @param loc Location to spawn the boat
      * @return Boat created as a result of this method
      */
-    public Boat spawnBoat(Location loc);
+    public Boat spawnBoat(LocationGetter loc);
 
     /**
      * Creates a creature at the given {@link Location}
@@ -309,7 +309,7 @@ public interface World {
      * @param type The creature to spawn
      * @return Resulting LivingEntity of this method, or null if it was unsuccessful
      */
-    public LivingEntity spawnCreature(Location loc, CreatureType type);
+    public LivingEntity spawnCreature(LocationGetter loc, CreatureType type);
 
     /**
      * Strikes lightning at the given {@link Location}
@@ -317,7 +317,7 @@ public interface World {
      * @param loc The location to strike lightning
      * @return
      */
-    public LightningStrike strikeLightning(Location loc);
+    public LightningStrike strikeLightning(LocationGetter loc);
 
     /**
      * Strikes lightning at the given {@link Location} without doing damage
@@ -325,7 +325,7 @@ public interface World {
      * @param loc The location to strike lightning
      * @return
      */
-    public LightningStrike strikeLightningEffect(Location loc);
+    public LightningStrike strikeLightningEffect(LocationGetter loc);
 
     /**
      * Get a list of all entities in this World
@@ -370,6 +370,8 @@ public interface World {
      *
      * @return The spawn location of this world
      */
+    //TODO: Change from Location to WorldSpecificGetter
+//    public WorldSpecificGetter getSpawnLocation();
     public Location getSpawnLocation();
 
     /**
@@ -500,7 +502,7 @@ public interface World {
      * @param power The power of explosion, where 4F is TNT
      * @return false if explosion was canceled, otherwise true
      */
-    public boolean createExplosion(Location loc, float power);
+    public boolean createExplosion(LocationGetter loc, float power);
 
     /**
      * Gets the {@link Environment} type of this world
@@ -554,7 +556,7 @@ public interface World {
      * @param effect the {@link Effect}
      * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
      */
-    public void playEffect(Location location, Effect effect, int data);
+    public void playEffect(LocationGetter location, Effect effect, int data);
     
     /**
      * Plays an effect to all players within a given radius around a location.
@@ -564,7 +566,7 @@ public interface World {
      * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP effects
      * @param radius the radius around the location
      */
-    public void playEffect(Location location, Effect effect, int data, int radius);
+    public void playEffect(LocationGetter location, Effect effect, int data, int radius);
     
     /**
      * Represents various map environment types that a world may be

@@ -1,5 +1,6 @@
 package org.bukkit.entity;
 
+import org.bukkit.location.LocationGetter;
 import org.bukkit.util.Vector;
 
 /**
@@ -56,6 +57,8 @@ public interface Minecart extends Vehicle {
      *
      * @param flying velocity modifier
      */
+    //TODO: De-deprecate
+//    public LocationGetter getFlyingVelocityMod();
     public Vector getFlyingVelocityMod();
 
     /**
@@ -64,7 +67,7 @@ public interface Minecart extends Vehicle {
      *
      * @param flying velocity modifier
      */
-    public void setFlyingVelocityMod(Vector flying);
+    public void setFlyingVelocityMod(LocationGetter flying);
 
     /**
      * Gets the derailed velocity modifier. Used for minecarts that are on the ground, but not on rails.
@@ -72,6 +75,8 @@ public interface Minecart extends Vehicle {
      * A derailed minecart's velocity is multiplied by this factor each tick.
      * @param visible speed
      */
+    //TODO: De-deprecate
+//    public LocationGetter getDerailedVelocityMod();
     public Vector getDerailedVelocityMod();
 
     /**
@@ -80,5 +85,5 @@ public interface Minecart extends Vehicle {
      *
      * @param visible speed
      */
-    public void setDerailedVelocityMod(Vector derailed);
+    public void setDerailedVelocityMod(LocationGetter derailed);
 }

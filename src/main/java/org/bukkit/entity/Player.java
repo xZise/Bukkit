@@ -7,6 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
+import org.bukkit.location.LocationGetter;
+import org.bukkit.location.WorldSpecificGetter;
 
 /**
  * Represents a player, connected or not
@@ -46,13 +48,15 @@ public interface Player extends HumanEntity, CommandSender {
      *
      * @param loc
      */
-    public void setCompassTarget(Location loc);
+    public void setCompassTarget(LocationGetter loc);
 
     /**
      * Get the previously set compass target.
      *
      * @return location of the target
      */
+    //TODO: De-deprecate
+//    public LocationGetter getCompassTarget()
     public Location getCompassTarget();
 
     /**
@@ -140,7 +144,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param instrument
      * @param note
      */
-    public void playNote(Location loc, byte instrument, byte note);
+    public void playNote(LocationGetter loc, byte instrument, byte note);
     
     /**
      * Plays an effect to just this player.
@@ -149,7 +153,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param effect the {@link Effect}
      * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
      */
-    public void playEffect(Location loc, Effect effect, int data);
+    public void playEffect(LocationGetter loc, Effect effect, int data);
 
     /**
      * Send a block change. This fakes a block change packet for a user at
@@ -159,7 +163,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param material
      * @param data
      */
-    public void sendBlockChange(Location loc, Material material, byte data);
+    public void sendBlockChange(WorldSpecificGetter loc, Material material, byte data);
 
     /**
      * Send a chunk change. This fakes a chunk change packet for a user at
@@ -178,7 +182,7 @@ public interface Player extends HumanEntity, CommandSender {
      *
      * @return true if the chunk change packet was sent
      */
-    public boolean sendChunkChange(Location loc, int sx, int sy, int sz, byte[] data);
+    public boolean sendChunkChange(LocationGetter loc, int sx, int sy, int sz, byte[] data);
 
     /**
      * Send a block change. This fakes a block change packet for a user at
@@ -188,7 +192,7 @@ public interface Player extends HumanEntity, CommandSender {
      * @param material
      * @param data
      */
-    public void sendBlockChange(Location loc, int material, byte data);
+    public void sendBlockChange(WorldSpecificGetter loc, int material, byte data);
 
     /**
      * Forces an update of the player's entire inventory.
