@@ -658,4 +658,12 @@ public class TestPlayer implements Player {
     public EntityType getType() {
         return EntityType.PLAYER;
     }
+
+    public void exhaust(float exhaustion) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public float getTotalExhaustion() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
